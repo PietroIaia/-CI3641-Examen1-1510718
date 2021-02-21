@@ -70,7 +70,7 @@ def Menu():
     print("\n\nPosibles acciones:\n\tEVAL <orden> <expr>\n\tMOSTRAR <orden> <expr>\n\tSALIR")
     accion = input("Ingrese una accion para proceder: ").split(" ", 2)
     # Si la accion es SALIR, abortamos la ejecucion del loop
-    if accion[0] == "SALIR":
+    if accion[0] == "SALIR" and len(accion) == 1:
       break
     
     # Error checking
