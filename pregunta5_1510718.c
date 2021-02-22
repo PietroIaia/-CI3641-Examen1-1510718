@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <time.h>
 
 // X = 7, Y = 1, Z = 8
 // α = ((7 + 1) mod 5) + 3
@@ -55,22 +56,53 @@ int F67_iterativa(int n) {
   } 
 
   int mod7 = (n % 7);
-  n -= 7 + mod7; 
+  n -= mod7; 
   int a = 35 + mod7;
   int b = 28 + mod7;
   int c = 21 + mod7;
   int d = 14 + mod7;
   int e = 7 + mod7;
   int f = mod7;
-  while (n < 42) {
-    f = e; e = d; d = c; c = b; b = a;
+  int aux_a;
+  while (n != 42) {
+    aux_a = a;
     a = (a + b + c + d + e + f);
+    f = e; e = d; d = c; c = b; b = aux_a;
+    n -= 7;
   }
   return (a + b + c + d + e + f);
 }
 
 int main (void){
-  printf("Recursión: %i\n", F67(100));
-  printf("Recursión de cola: %i\n", F67_cola(100));
-  printf("Iteración: %i\n", F67_cola(100));
+  clock_t begin;
+  clock_t end; 
+  int inputs[5] = {39, 60, 150, 250, 300};
+  int F67_val;
+  int F67_cola_val;
+  int F67_iterativa_val;
+  double time_spent_recursion;
+  double time_spent_cola;
+  double time_spent_iterativo;
+
+  for (int i=0; i<5; i++)
+  {
+    printf("Ejecución con n = %i\n", inputs[i]);
+    begin = clock();
+    F67_val = F67(inputs[i]);
+    end = clock();
+    time_spent_recursion = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Recursión: %i, Tiempo de ejecución: %f\n", F67_val, time_spent_recursion);
+
+    begin = clock();
+    F67_cola_val = F67_cola(inputs[i]);
+    end = clock();
+    time_spent_cola = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Cola: %i, Tiempo de ejecución: %f\n", F67_cola_val, time_spent_cola);
+
+    begin = clock();
+    F67_iterativa_val = F67_iterativa(inputs[i]);
+    end = clock();
+    time_spent_iterativo = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Iterativa: %i, Tiempo de ejecución: %f\n\n", F67_iterativa_val, time_spent_iterativo);
+  }
 }
