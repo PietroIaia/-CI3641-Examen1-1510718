@@ -40,7 +40,7 @@ class NodoArbol:
     elif (self.val == "*"):
       return self.hijoIzquierda.evaluar() * self.hijoDerecha.evaluar()
     elif (self.val == "/"):
-      return self.hijoIzquierda.evaluar() / self.hijoDerecha.evaluar()
+      return self.hijoIzquierda.evaluar() // self.hijoDerecha.evaluar()
     else:
       return int(self.val)
 
