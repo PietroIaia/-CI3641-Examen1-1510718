@@ -22,7 +22,7 @@ class pregunta6Test(TestCase):
     def test_input_errors(self):
         self.maxDiff = None
 
-        input_ = "RESERVA a 1\nMOSTRAR 2\nTestAccionError\n \nRESERVAR a 4\nRESERVAR a 3\nRESERVAR b 1\nLIBERAR c\nRESERVAR a 1\nSALIR\n"
+        input_ = "RESERVA a 1\nMOSTRAR 2\nTestAccionError\n \nRESERVAR a 4\nRESERVAR a 3\nRESERVAR b 1\nLIBERAR c\nRESERVAR b 1\nSALIR\n"
 
         menu_string = "\n\nPosibles acciones:\n\tRESERVAR <nombre> <cantidad>\n\tLIBERAR <nombre>\n\tMOSTRAR\n\tSALIR\nIngrese una acción para proceder: "
 
@@ -34,9 +34,8 @@ class pregunta6Test(TestCase):
                 output = mocked_stdout.getvalue()
                 expected_output = menu_string + "\nLa acción que ingresó no existe, intente de nuevo.\n" + menu_string + "\nLa acción que ingresó no existe, intente de nuevo.\n" \
                 + menu_string + "\nLa acción que ingresó no existe, intente de nuevo.\n" + menu_string +"\nNo se ingresó ninguna acción.\n" + menu_string + \
-                "\nEl numero de bloques ingresado es mayor al tamaño total de la memoria.\n" + menu_string + menu_string + \
-                "\nNo existe espacio libre contiguo lo suficientemente grande para satifacer la acción.\n" + menu_string + "\nc no tiene memoria reservada.\n" + menu_string + \
-                "\na ya tiene bloques de memoria reservada.\n" + menu_string
+                "\nEl numero de bloques ingresado es mayor al tamaño total de la memoria.\n" + menu_string + "\nNo existe espacio libre contiguo lo suficientemente grande para satifacer la acción.\n" \
+                + menu_string + menu_string + "\nc no tiene memoria reservada.\n" + menu_string + "\nb ya tiene bloques de memoria reservada.\n" + menu_string
 
                 self.assertEqual(output, expected_output)
     
@@ -52,16 +51,13 @@ class pregunta6Test(TestCase):
         with patch('sys.stdin', StringIO(input_)) as mocked_stdin:
             with patch('sys.stdout', new=StringIO()) as mocked_stdout:
 
-                Menu(2)
+                Menu(3)
 
                 output = mocked_stdout.getvalue()
-                expected_output = menu_string + menu_string + "\nEspacio de memoria de 4KB. Espacio libre de memoria: 2KB. \n\tEspacio de memoria de 2KB. " \
-                "Espacio libre de memoria: 0KB. Identificador del bloque: a\n\tEspacio de memoria de 2KB. Espacio libre de memoria: 2KB. \n" + menu_string + menu_string + \
-                "\nEspacio de memoria de 4KB. Espacio libre de memoria: 0KB. \n\tEspacio de memoria de 2KB. Espacio libre de memoria: 0KB. Identificador del bloque: a" \
-                "\n\tEspacio de memoria de 2KB. Espacio libre de memoria: 0KB. Identificador del bloque: b\n" + menu_string + menu_string + "\nEspacio de memoria de 4KB. Espacio libre de memoria: 2KB. " \
-                "\n\tEspacio de memoria de 2KB. Espacio libre de memoria: 0KB. Identificador del bloque: a\n\tEspacio de memoria de 2KB. Espacio libre de memoria: 2KB. \n" \
-                + menu_string + menu_string + "\nEspacio de memoria de 4KB. Espacio libre de memoria: 4KB. \n\tEspacio de memoria de 2KB. Espacio libre de memoria: 2KB. " \
-                "\n\tEspacio de memoria de 2KB. Espacio libre de memoria: 2KB. \n" + menu_string + menu_string + "\nEspacio de memoria de 4KB. Espacio libre de memoria: 0KB. " \
-                "Identificador del bloque: a\n\tEspacio de memoria de 2KB. Espacio libre de memoria: 0KB. \n\tEspacio de memoria de 2KB. Espacio libre de memoria: 0KB. \n" + menu_string
+                expected_output = menu_string + menu_string + "\nEspacio de memoria de 1. Identificador del bloque: a\nEspacio de memoria de 2. \n" + menu_string + menu_string + \
+                "\nEspacio de memoria de 1. Identificador del bloque: a\nEspacio de memoria de 2. \nCompuesto por:\n\tEspacio de memoria de 1. Identificador del bloque: b\n\t" \
+                "Espacio de memoria de 1. \n" + menu_string + menu_string + "\nEspacio de memoria de 1. Identificador del bloque: a\nEspacio de memoria de 2. \n" + menu_string + \
+                menu_string + "\nEspacio de memoria de 1. \nEspacio de memoria de 2. \n" + menu_string + menu_string + "\nEspacio de memoria de 1. \nEspacio de memoria de 2. Identificador del bloque: a\n" \
+                + menu_string 
 
                 self.assertEqual(output, expected_output)
