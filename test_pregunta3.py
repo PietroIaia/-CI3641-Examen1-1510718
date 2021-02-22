@@ -8,7 +8,7 @@ import subprocess
 
 # Para correr pruebas de cobertura: pip install coverage
 
-class pregunta6Test(TestCase):
+class pregunta3Test(TestCase):
 
     # Probamos: 
     #   Acción inexistente por escribir mal RESERVAR
